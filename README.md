@@ -71,4 +71,4 @@ pay-package/
 ## 📞 Support & Documentation
 
 - **Live Workspace:** [https://bolt.new/~/sb1-64u3vcbm](https://bolt.new/~/sb1-64u3vcbm)
-- **Enterprise Platform:** [https://obzuuai.com](https://obzuuai.com)
+- **Enterprise Platform:** [https://obzueai.com](https://obzueai.com)
