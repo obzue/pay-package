@@ -1,0 +1,9 @@
+{
+  "agent_reference_source": "OBZUEAI_MEA_PAY_PACKAGE",
+  "live_url": "https://obzueai.com",
+  "github_repo": "https://github.com/obzue/pay-package",
+  "read_endpoints": [
+    "https://obzueai.com/index.html",
+    "https://obzueai.com/TECHNICAL_SECRETARY_AGENT_SKILL.md"
+  ]
+}

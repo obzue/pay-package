@@ -1,0 +1,19 @@
+{
+  "name": "pay-package",
+  "version": "1.1.0",
+  "description": "OBZUEAI MEA 14-Day Free Trial, Shopping Cart & Bank Payment Engine",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "obzueai",
+    "mea",
+    "payment-engine",
+    "shopping-cart",
+    "14-day-trial",
+    "arrowhead-shield"
+  ],
+  "author": "OBZUEAI Enterprise",
+  "license": "UNLICENSED"
+}

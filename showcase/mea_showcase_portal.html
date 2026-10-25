@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MEA - Marketing Engineer Agent & AI Growth Operator</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              900: '#1e1b4b',
+              accent: '#06b6d4',
+              neon: '#10b981',
+              pink: '#ec4899'
+            },
+            dark: {
+              bg: '#090d16',
+              card: '#111827',
+              border: 'rgba(255, 255, 255, 0.08)'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #090d16;
+      color: #f3f4f6;
+      overflow-x: hidden;
+    }
+    
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card {
+      background: rgba(23, 32, 54, 0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.2);
+    }
+
+    .neon-glow {
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.35);
+    }
+
+    .neon-text-cyan {
+      text-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2937;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #374151;
+    }
+
+    /* Animated gradient border */
+    .gradient-border {
+      position: relative;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.1), rgba(236, 72, 153, 0.3));
+      padding: 1px;
+    }
+
+    canvas#particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen text-slate-100 selection:bg-brand-500 selection:text-white" x-data="meaApp()">
+
+  <!-- Background Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <div class="relative z-10 flex flex-col min-h-screen">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-4 lg:px-8 py-3 transition-all duration-300">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-brand-accent to-brand-neon p-0.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
+            <div class="w-full h-full bg-dark-bg rounded-[10px] flex items-center justify-center">
+              <i class="fa-solid fa-brain text-brand-400 text-lg"></i>
+            </div>
+          </div>
+          <div>
+            <div class="font-extrabold text-lg tracking-wider flex items-center gap-2">
+              <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-brand-accent">MEA</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-400 border border-brand-500/30 font-mono font-medium">v3.4 PRO</span>
+            </div>
+            <p class="text-[10px] text-slate-400 -mt-1 tracking-tight">Marketing Engineer Agent</p>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+          <a href="#roster" class="hover:text-brand-400 transition-colors">20-Agent Roster</a>
+          <a href="#workflows" class="hover:text-brand-400 transition-colors">System Workflows</a>
+          <a href="#verticals" class="hover:text-brand-400 transition-colors">Industry Applications</a>
+          <a href="#safety" class="hover:text-brand-400 transition-colors">Compliance & Guardrails</a>
+          <a href="#calculator" class="hover:text-brand-400 transition-colors">ROI Calculator</a>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="flex items-center gap-3">
+          <a href="https://bolt.new/~/sb1-64u3vcbm" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+            <i class="fa-solid fa-bolt text-amber-400"></i>
+            <span>Project Workspace</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400"></i>
+          </a>
+          
+          <a href="#config" class="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg bg-gradient-to-r from-brand-600 to-brand-accent hover:from-brand-500 hover:to-cyan-400 text-white shadow-lg shadow-brand-500/25 transition">
+            <i class="fa-solid fa-terminal"></i>
+            <span>Deploy MEA</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-20 space-y-24">
+
+      <!-- ================= HERO SECTION ================= -->
+      <section class="pt-8 pb-12 grid lg:grid-cols-12 gap-12 items-center">
+        <!-- Hero Text -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-medium">
+            <span class="w-2 h-2 rounded-full bg-brand-neon animate-pulse"></span>
+            <span>Next-Gen Autonomous Growth Architecture</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none">
+            Replace a <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-cyan-300 to-emerald-400">$500k–$1M</span> Marketing Team with <span class="text-white relative underline decoration-brand-accent decoration-wavy underline-offset-8">One AI Engine</span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
+            Meet <strong class="text-white">MEA (Marketing Engineer Agent)</strong> — an autonomous growth operator that builds high-converting funnels, executes continuous ICE experiments, optimizes ad channels, and scales pipeline with grounded CRM intelligence.
+          </p>
+
+          <!-- Metrics Bar -->
+          <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-800">
+            <div>
+              <div class="text-2xl sm:text-3xl font-bold text-brand-neon font-mono">20 Specialized</div>
+              <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Autonomous Agents</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-bold text-brand-accent font-mono">10x Speed</div>
+              <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Experimentation Velocity</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-bold text-brand-400 font-mono">5-Gate</div>
+              <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Compliance Safeguard</div>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+            <a href="#roster" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-accent text-white font-semibold shadow-lg shadow-brand-500/30 hover:scale-105 transition duration-200 flex items-center gap-2 text-sm">
+              <i class="fa-solid fa-users-gear"></i>
+              <span>Explore 20 Agent Roster</span>
+            </a>
+
+            <a href="https://bolt.new/~/sb1-64u3vcbm" target="_blank" rel="noopener noreferrer" class="px-6 py-3.5 rounded-xl glass-panel hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold transition flex items-center gap-2 text-sm">
+              <i class="fa-solid fa-arrow-up-right-from-square text-brand-accent"></i>
+              <span>Open Bolt Workspace</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Avatar / Visual Graphical Graphic -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative w-full max-w-md">
+            <!-- Glowing background aura -->
+            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-brand-500 via-brand-accent to-brand-pink opacity-30 blur-2xl animate-pulse"></div>
+
+            <div class="relative glass-panel rounded-2xl p-6 border border-brand-500/30 shadow-2xl space-y-6">
+              <!-- MEA Profile Header -->
+              <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                  <div class="relative">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-500 via-cyan-500 to-indigo-900 p-0.5 shadow-md">
+                      <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-robot text-2xl text-brand-400"></i>
+                      </div>
+                    </div>
+                    <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-slate-900"></span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-lg text-white">MEA Command Kernel</h3>
+                    <p class="text-xs text-brand-accent font-mono">OPERATIONAL MODE: AUTONOMOUS</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300 font-mono border border-slate-700">ID: MEA-PRO-2026</span>
+                </div>
+              </div>
+
+              <!-- Terminal Terminal Output Mock -->
+              <div class="bg-slate-950 rounded-xl p-4 font-mono text-xs text-slate-300 space-y-2 border border-slate-800/80 shadow-inner">
+                <div class="flex items-center justify-between text-slate-500 pb-1 border-b border-slate-800 text-[10px]">
+                  <span>AGENT LOG STREAM</span>
+                  <span class="text-emerald-400">● ACTIVE</span>
+                </div>
+                <p class="text-slate-400"><span class="text-brand-accent">[09:14:02]</span> Initializing 6 Divisions...</p>
+                <p class="text-slate-300"><span class="text-indigo-400">[09:14:03]</span> Grounding with CRM data &amp; ICP parameters...</p>
+                <p class="text-emerald-400"><span class="text-brand-accent">[09:14:05]</span> Launched 5 Hook Variations (ICE Score: 8.4)</p>
+                <p class="text-amber-300"><span class="text-brand-accent">[09:14:08]</span> Human Approval Gate: Landing Page Copy ready.</p>
+              </div>
+
+              <!-- Key Capabilities Pills -->
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 flex items-center gap-2">
+                  <i class="fa-solid fa-chart-line text-emerald-400"></i>
+                  <span>ICE Experimentation</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 flex items-center gap-2">
+                  <i class="fa-solid fa-shield-halved text-brand-accent"></i>
+                  <span>5-Gate Compliance</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 flex items-center gap-2">
+                  <i class="fa-solid fa-magnifying-glass-chart text-purple-400"></i>
+                  <span>GEO / SearchGPT</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-slate-800/60 border border-slate-700/50 flex items-center gap-2">
+                  <i class="fa-solid fa-database text-amber-400"></i>
+                  <span>CRM Grounded</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 20-AGENT ROSTER SECTION ================= -->
+      <section id="roster" class="space-y-8 scroll-mt-24">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">
+            <i class="fa-solid fa-sitemap"></i>
+            <span>MODULAR GROWTH DIVISION ARCHITECTURE</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">The 20 Specialized Growth Agents</h2>
+          <p class="text-slate-400 text-sm sm:text-base">MEA orchestrates 20 autonomous sub-agents across 6 specialized divisions. Filter or click any agent to inspect their deliverables and prompt logic.</p>
+        </div>
+
+        <!-- Division Filter Tabs -->
+        <div class="flex flex-wrap items-center justify-center gap-2 pb-4">
+          <button @click="selectedDivision = 'all'" :class="selectedDivision === 'all' ? 'bg-brand-600 text-white border-brand-500' : 'glass-panel text-slate-400 hover:text-white border-slate-800'" class="px-4 py-2 rounded-lg text-xs font-semibold border transition">
+            All Divisions (20)
+          </button>
+          <template x-for="div in divisions" :key="div.id">
+            <button @click="selectedDivision = div.id" :class="selectedDivision === div.id ? 'bg-brand-600 text-white border-brand-500' : 'glass-panel text-slate-400 hover:text-white border-slate-800'" class="px-4 py-2 rounded-lg text-xs font-semibold border transition flex items-center gap-2">
+              <i :class="div.icon" class="text-brand-accent"></i>
+              <span x-text="div.name"></span>
+            </button>
+          </template>
+        </div>
+
+        <!-- Agent Cards Grid -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <template x-for="agent in filteredAgents" :key="agent.id">
+            <div @click="openAgentModal(agent)" class="glass-card rounded-xl p-5 border border-slate-800 hover:border-brand-500/50 cursor-pointer flex flex-col justify-between group">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="w-8 h-8 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-400 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white transition">
+                    <i :class="agent.icon" class="text-sm"></i>
+                  </span>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 font-mono border border-slate-700" x-text="agent.divisionName"></span>
+                </div>
+                <div>
+                  <h3 class="font-bold text-base text-white group-hover:text-brand-accent transition" x-text="agent.title"></h3>
+                  <p class="text-xs text-slate-400 mt-1 line-clamp-2" x-text="agent.description"></p>
+                </div>
+              </div>
+
+              <div class="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                <span class="font-mono text-[11px] text-brand-accent" x-text="agent.code"></span>
+                <span class="group-hover:translate-x-1 transition-transform text-slate-300 font-medium">Details <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+              </div>
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <!-- ================= HOW MEA OPERATES (SYSTEM WORKFLOWS) ================= -->
+      <section id="workflows" class="space-y-8 scroll-mt-24">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold">
+            <i class="fa-solid fa-diagram-project"></i>
+            <span>SYSTEM OPERATING WORKFLOWS</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">How MEA Executes Marketing Operations</h2>
+          <p class="text-slate-400 text-sm">Toggle between core workflows to see how MEA takes a product from zero to scaled revenue with autonomous precision.</p>
+        </div>
+
+        <!-- Workflow Tabs -->
+        <div class="flex justify-center border-b border-slate-800">
+          <button @click="activeWorkflow = 'launch'" :class="activeWorkflow === 'launch' ? 'border-brand-500 text-brand-400 font-bold' : 'border-transparent text-slate-400 hover:text-slate-200'" class="px-6 py-3 border-b-2 text-sm transition">
+            0-to-1 Funnel Launch Protocol
+          </button>
+          <button @click="activeWorkflow = 'ice'" :class="activeWorkflow === 'ice' ? 'border-brand-500 text-brand-400 font-bold' : 'border-transparent text-slate-400 hover:text-slate-200'" class="px-6 py-3 border-b-2 text-sm transition">
+            ICE Rapid Experimentation Loop
+          </button>
+        </div>
+
+        <!-- Workflow 1: 0-to-1 Launch -->
+        <div x-show="activeWorkflow === 'launch'" class="glass-panel rounded-2xl p-6 lg:p-8 border border-slate-800 space-y-8">
+          <div class="grid md:grid-cols-4 gap-6 relative">
+            <template x-for="(step, index) in launchSteps" :key="index">
+              <div class="glass-card p-5 rounded-xl border border-slate-800 space-y-3 relative">
+                <div class="flex items-center justify-between">
+                  <span class="w-8 h-8 rounded-full bg-gradient-to-r from-brand-600 to-brand-accent text-white font-mono font-bold text-xs flex items-center justify-center" x-text="index + 1"></span>
+                  <span class="text-[10px] text-brand-neon font-mono" x-text="step.phase"></span>
+                </div>
+                <h4 class="font-bold text-white text-sm" x-text="step.title"></h4>
+                <p class="text-xs text-slate-400 leading-relaxed" x-text="step.desc"></p>
+                <div class="pt-2">
+                  <span class="text-[10px] px-2 py-1 rounded bg-slate-800 text-slate-300 font-mono block truncate" x-text="'Agents: ' + step.agents"></span>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Workflow 2: ICE Loop -->
+        <div x-show="activeWorkflow === 'ice'" class="glass-panel rounded-2xl p-6 lg:p-8 border border-slate-800 space-y-6">
+          <div class="grid lg:grid-cols-3 gap-6">
+            <div class="glass-card p-5 rounded-xl space-y-3">
+              <div class="w-10 h-10 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-lg">I</div>
+              <h4 class="font-bold text-white">Impact Assessment (1–10)</h4>
+              <p class="text-xs text-slate-400">Evaluates potential uplift on core revenue metrics, ROAS, conversion rate, or pipeline velocity if hypothesis succeeds.</p>
+            </div>
+            <div class="glass-card p-5 rounded-xl space-y-3">
+              <div class="w-10 h-10 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-lg">C</div>
+              <h4 class="font-bold text-white">Confidence Score (1–10)</h4>
+              <p class="text-xs text-slate-400">Grounded in past channel performance, customer review analysis, or historical CRM behavior patterns.</p>
+            </div>
+            <div class="glass-card p-5 rounded-xl space-y-3">
+              <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg">E</div>
+              <h4 class="font-bold text-white">Ease of Execution (1–10)</h4>
+              <p class="text-xs text-slate-400">Factoring agent autonomous generation speed vs required human sign-off overhead.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= INDUSTRY APPLICATIONS & VERTICALS ================= -->
+      <section id="verticals" class="space-y-8 scroll-mt-24">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+            <i class="fa-solid fa-briefcase"></i>
+            <span>HIGH-ROI VERTICALS</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Industrial Best Use Applications</h2>
+          <p class="text-slate-400 text-sm">Where MEA delivers the highest impact across high-margin business models.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <template x-for="v in verticals" :key="v.title">
+            <div class="glass-card p-6 rounded-2xl space-y-4 border border-slate-800">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 flex items-center justify-center text-brand-accent text-xl">
+                <i :class="v.icon"></i>
+              </div>
+              <h3 class="font-bold text-lg text-white" x-text="v.title"></h3>
+              <p class="text-xs text-slate-400 leading-relaxed" x-text="v.desc"></p>
+              <div class="pt-3 border-t border-slate-800 space-y-2">
+                <div class="text-[11px] font-semibold text-slate-300 uppercase tracking-wider">Key Impact:</div>
+                <div class="text-xs font-mono text-brand-neon bg-brand-neon/10 p-2 rounded border border-brand-neon/20" x-text="v.impact"></div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <!-- ================= INDUSTRIAL BEST PRACTICES & GUARDRAILS ================= -->
+      <section id="safety" class="glass-panel rounded-3xl p-8 border border-slate-800 space-y-8 scroll-mt-24">
+        <div class="grid lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-5 space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>ENTERPRISE SAFETY ARCHITECTURE</span>
+            </div>
+            <h2 class="text-3xl font-extrabold text-white">5-Gate Compliance & Guardrails</h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+              MEA operates under strict programmatic constraints to ensure zero compliance violations, brand degradation, or legal friction.
+            </p>
+          </div>
+
+          <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+            <div class="glass-card p-4 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-amber-400 font-bold text-xs uppercase font-mono">Gate 1: Brand &amp; Tone</div>
+              <p class="text-xs text-slate-400">Scored against custom voice vectors; rejects cliché LLM buzzwords.</p>
+            </div>
+            <div class="glass-card p-4 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-amber-400 font-bold text-xs uppercase font-mono">Gate 2: Claim Verification</div>
+              <p class="text-xs text-slate-400">Cross-checks statistics and claims against verified product specs.</p>
+            </div>
+            <div class="glass-card p-4 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-amber-400 font-bold text-xs uppercase font-mono">Gate 3: Privacy &amp; Consent</div>
+              <p class="text-xs text-slate-400">GDPR, CAN-SPAM, CCPA, and opt-out compliance prior to outreach.</p>
+            </div>
+            <div class="glass-card p-4 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-amber-400 font-bold text-xs uppercase font-mono">Gate 4: Human Sign-off</div>
+              <p class="text-xs text-slate-400">Threshold-based approval requests for high-budget ad spend.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= ROI & COST CALCULATOR ================= -->
+      <section id="calculator" class="space-y-8 scroll-mt-24">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-semibold">
+            <i class="fa-solid fa-calculator"></i>
+            <span>FINANCIAL ANALYSIS</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Interactive ROI & Overhead Calculator</h2>
+          <p class="text-slate-400 text-sm">Compare the annual cost of a full headcount marketing team vs operating with MEA.</p>
+        </div>
+
+        <div class="glass-panel rounded-3xl p-6 lg:p-10 border border-slate-800 grid lg:grid-cols-12 gap-8 items-center">
+          <!-- Controls -->
+          <div class="lg:col-span-6 space-y-6">
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-300 font-medium">Marketing Team Headcount</span>
+                <span class="font-bold text-brand-accent font-mono" x-text="teamSize + ' Team Members'"></span>
+              </div>
+              <input type="range" min="1" max="10" x-model="teamSize" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500">
+            </div>
+
+            <div class="space-y-2">
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-300 font-medium">Avg Salary per Marketer ($/yr)</span>
+                <span class="font-bold text-brand-accent font-mono" x-text="'$' + (avgSalary * 1000).toLocaleString()"></span>
+              </div>
+              <input type="range" min="60" max="200" step="5" x-model="avgSalary" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500">
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+              <div class="text-xs text-slate-400">Included Headcount Roles:</div>
+              <div class="text-xs text-slate-300 flex flex-wrap gap-2">
+                <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Growth Lead</span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Copywriter</span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Media Buyer</span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">SEO Strategist</span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">Data Analyst</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparison Display -->
+          <div class="lg:col-span-6 space-y-6 bg-slate-950/80 p-6 rounded-2xl border border-slate-800">
+            <div class="space-y-4">
+              <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <span class="text-xs text-slate-400">Traditional Team Cost:</span>
+                <span class="text-xl font-bold font-mono text-red-400" x-text="'$' + (teamSize * avgSalary * 1000).toLocaleString() + '/yr'"></span>
+              </div>
+
+              <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <span class="text-xs text-slate-400">Operating Cost with MEA:</span>
+                <span class="text-xl font-bold font-mono text-emerald-400" x-text="'$' + meaCost.toLocaleString() + '/yr'"></span>
+              </div>
+
+              <div class="pt-2 text-center">
+                <div class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Estimated Annual Savings</div>
+                <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-300 font-mono mt-1" x-text="'$' + Math.max(0, (teamSize * avgSalary * 1000) - meaCost).toLocaleString()"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= LAUNCH CONFIG & PROMPT ENGINE ================= -->
+      <section id="config" class="space-y-8 scroll-mt-24">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-400 text-xs font-semibold">
+            <i class="fa-solid fa-terminal"></i>
+            <span>DEPLOYMENT &amp; INTEGRATION</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Launch &amp; Prompt Configuration</h2>
+          <p class="text-slate-400 text-sm">Copy the initialization schema or trigger prompts to run MEA inside your AI execution environment.</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+          <!-- Schema Copy Block -->
+          <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-white flex items-center gap-2">
+                <i class="fa-solid fa-code text-brand-accent"></i>
+                <span>MEA Agent Manifest Configuration</span>
+              </h3>
+              <button @click="copyText(configJson, 'copied1')" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center gap-1.5 font-mono">
+                <i class="fa-solid" :class="copied1 ? 'fa-check text-emerald-400' : 'fa-copy'"></i>
+                <span x-text="copied1 ? 'Copied!' : 'Copy JSON'"></span>
+              </button>
+            </div>
+            <pre class="bg-slate-950 p-4 rounded-xl text-xs font-mono text-slate-300 overflow-x-auto border border-slate-800/80 h-64" x-text="configJson"></pre>
+          </div>
+
+          <!-- Prompt Launcher -->
+          <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-sm text-white flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles text-brand-neon"></i>
+                <span>Activation Launch Prompt</span>
+              </h3>
+              <button @click="copyText(activationPrompt, 'copied2')" class="text-xs px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center gap-1.5 font-mono">
+                <i class="fa-solid" :class="copied2 ? 'fa-check text-emerald-400' : 'fa-copy'"></i>
+                <span x-text="copied2 ? 'Copied!' : 'Copy Prompt'"></span>
+              </button>
+            </div>
+            <textarea readonly class="w-full bg-slate-950 p-4 rounded-xl text-xs font-mono text-slate-300 border border-slate-800/80 h-64 resize-none focus:outline-none" x-text="activationPrompt"></textarea>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-slate-800 py-8 px-4 text-center text-xs text-slate-400">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2 font-mono">
+          <i class="fa-solid fa-brain text-brand-500"></i>
+          <span>MEA: Marketing Engineer Agent &amp; AI Growth Operator</span>
+        </div>
+        <div>
+          <span>Workspace Integration: </span>
+          <a href="https://bolt.new/~/sb1-64u3vcbm" target="_blank" class="text-brand-accent hover:underline font-mono">bolt.new/~/sb1-64u3vcbm</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Agent Detail Modal -->
+    <div x-show="modalOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md" x-cloak x-transition>
+      <div @click.away="modalOpen = false" class="glass-panel max-w-xl w-full rounded-2xl p-6 border border-brand-500/30 space-y-6 shadow-2xl relative">
+        <button @click="modalOpen = false" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <template x-if="activeAgent">
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <span class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center text-lg">
+                <i :class="activeAgent.icon"></i>
+              </span>
+              <div>
+                <h3 class="font-bold text-lg text-white" x-text="activeAgent.title"></h3>
+                <span class="text-xs text-brand-accent font-mono" x-text="activeAgent.code"></span>
+              </div>
+            </div>
+
+            <p class="text-sm text-slate-300 leading-relaxed" x-text="activeAgent.description"></p>
+
+            <div class="space-y-2 pt-2 border-t border-slate-800">
+              <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Primary Deliverables:</h4>
+              <ul class="text-xs text-slate-300 space-y-1.5 list-disc list-inside">
+                <template x-for="item in activeAgent.deliverables" :key="item">
+                  <li x-text="item"></li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Interactive Alpine App Logic -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('meaApp', () => ({
+        selectedDivision: 'all',
+        activeWorkflow: 'launch',
+        teamSize: 4,
+        avgSalary: 110,
+        meaCost: 24000,
+        copied1: false,
+        copied2: false,
+        modalOpen: false,
+        activeAgent: null,
+
+        divisions: [
+          { id: 'strategy', name: 'Strategy & Foundations', icon: 'fa-solid fa-compass' },
+          { id: 'content', name: 'Content & Creative', icon: 'fa-solid fa-pen-nib' },
+          { id: 'traffic', name: 'Traffic & Acquisition', icon: 'fa-solid fa-bullhorn' },
+          { id: 'nurture', name: 'Nurture & Retention', icon: 'fa-solid fa-envelope-open-text' },
+          { id: 'experiments', name: 'Rapid Experimentation', icon: 'fa-solid fa-vial' },
+          { id: 'compliance', name: 'Operations & Safety', icon: 'fa-solid fa-shield-halved' }
+        ],
+
+        agents: [
+          { id: 1, division: 'strategy', divisionName: 'Strategy', code: 'AGT-STR-01', title: 'Positioning Architect', icon: 'fa-solid fa-crosshairs', description: 'Extracts core customer pain points, synthesizes USP, and defines high-converting value propositions.', deliverables: ['Positioning Map', '3-Tier Value Proposition', 'Competitor Vulnerability Audit'] },
+          { id: 2, division: 'strategy', divisionName: 'Strategy', code: 'AGT-STR-02', title: 'ICP & Persona Synthesizer', icon: 'fa-solid fa-users', description: 'Analyzes buyer psychographics, purchase triggers, and objections grounded in real CRM interactions.', deliverables: ['3 Detailed Buyer Personas', 'Trigger & Barrier Matrix', 'Target Keyword Clusters'] },
+          { id: 3, division: 'strategy', divisionName: 'Strategy', code: 'AGT-STR-03', title: 'Offer Designer', icon: 'fa-solid fa-gift', description: 'Structures high-converting stacked offers, bonuses, and risk-reversal guarantees.', deliverables: ['Irresistible Stacked Offer Matrix', 'Pricing Tier Strategy', 'Guarantee Framework'] },
+
+          { id: 4, division: 'content', divisionName: 'Content', code: 'AGT-CRE-01', title: 'VSL & Script Writer', icon: 'fa-solid fa-video', description: 'Drafts high-retention 6-part Video Sales Letters (VSL) and short-form video hooks.', deliverables: ['6-Step VSL Script', '10 UGC Hook Variations', 'Pattern Interrupt Cards'] },
+          { id: 5, division: 'content', divisionName: 'Content', code: 'AGT-CRE-02', title: 'Ad Creative Copywriter', icon: 'fa-solid fa-ad', description: 'Generates angle-varied ad copy across Meta, LinkedIn, and YouTube channels.', deliverables: ['15 Direct Response Ad Angles', 'Headline Variant Bank', 'Primary Text Matrix'] },
+          { id: 6, division: 'content', divisionName: 'Content', code: 'AGT-CRE-03', title: 'Landing Page Architect', icon: 'fa-solid fa-laptop-code', description: 'Designs and drafts high-converting landing page frameworks and visual flow wireframes.', deliverables: ['Above-the-Fold Hero Layout', 'Social Proof Module', 'FAQ Accordion Matrix'] },
+          { id: 7, division: 'content', divisionName: 'Content', code: 'AGT-CRE-04', title: 'GEO / SearchGPT Specialist', icon: 'fa-solid fa-magnifying-glass-chart', description: 'Optimizes content structure to ensure high citation rates in AI engines like Perplexity & SearchGPT.', deliverables: ['Generative Citation Model Map', 'Entity Density Optimization', 'Structured Data Schema'] },
+
+          { id: 8, division: 'traffic', divisionName: 'Traffic', code: 'AGT-TRF-01', title: 'Paid Social Strategist', icon: 'fa-brands fa-meta', description: 'Configures campaign structures, creative testing rotators, and audience targeting parameters.', deliverables: ['Audience Testing Matrix', 'Budget Allocation Plan', 'Creative Refresh Schedule'] },
+          { id: 9, division: 'traffic', divisionName: 'Traffic', code: 'AGT-TRF-02', title: 'Search & Intent Operator', icon: 'fa-brands fa-google', description: 'Manages high-intent keyword structures, negative lists, and search ad headlines.', deliverables: ['High-Intent Keyword Lists', 'Negative Match Clusters', 'RSA Ad Combinations'] },
+          { id: 10, division: 'traffic', divisionName: 'Traffic', code: 'AGT-TRF-03', title: 'Organic Programmatic Engine', icon: 'fa-solid fa-network-wired', description: 'Automates programmatic content publishing and channel distribution loops.', deliverables: ['Content Atomization Workflow', 'Multi-Platform Distribution Schedule'] },
+
+          { id: 11, division: 'nurture', divisionName: 'Nurture', code: 'AGT-NRT-01', title: 'Email Flow Specialist', icon: 'fa-solid fa-envelope', description: 'Builds welcome series, abandoned cart flows, and churn-prevention re-engagement campaigns.', deliverables: ['5-Part Welcome Sequence', 'Re-Activation Campaign', 'Subject Line A/B Test Suite'] },
+          { id: 12, division: 'nurture', divisionName: 'Nurture', code: 'AGT-NRT-02', title: 'SMS & Instant Messaging Agent', icon: 'fa-solid fa-comment-dots', description: 'Engineers high-response conversational SMS sequences and quick-reply decision trees.', deliverables: ['2-Way SMS Sequences', 'Opt-In Lead Magnet Delivery'] },
+          { id: 13, division: 'nurture', divisionName: 'Nurture', code: 'AGT-NRT-03', title: 'CRM Pipeline Orchestrator', icon: 'fa-solid fa-database', description: 'Connects funnel engagement signals into CRM deal stage triggers and lead scoring models.', deliverables: ['Lead Scoring Criteria Matrix', 'Lifecycle Stage Rules', 'Automated CRM Tagging'] },
+
+          { id: 14, division: 'experiments', divisionName: 'Experiments', code: 'AGT-EXP-01', title: 'ICE Matrix Scorer', icon: 'fa-solid fa-list-check', description: 'Prioritizes marketing experiments by calculating Impact, Confidence, and Ease scores.', deliverables: ['Prioritized ICE Matrix', 'Weekly Experiment Backlog'] },
+          { id: 15, division: 'experiments', divisionName: 'Experiments', code: 'AGT-EXP-02', title: 'Multivariate A/B Tester', icon: 'fa-solid fa-flask', description: 'Sets up statistically rigorous split tests across headlines, CTA buttons, and offers.', deliverables: ['Test Variance Blueprint', 'Statistical Significance Report'] },
+          { id: 16, division: 'experiments', divisionName: 'Experiments', code: 'AGT-EXP-03', title: 'Attribution & Analytics Agent', icon: 'fa-solid fa-chart-pie', description: 'Synthesizes multi-touch attribution metrics to identify true blended CAC and LTV.', deliverables: ['Blended ROAS Dashboard', 'Channel Attribution Breakdown'] },
+
+          { id: 17, division: 'compliance', divisionName: 'Operations', code: 'AGT-OPS-01', title: 'Brand Safety Auditor', icon: 'fa-solid fa-user-shield', description: 'Enforces brand guidelines and tone vector scoring across all generated copy.', deliverables: ['Brand Compliance Scorecard', 'Forbidden Phrase Filter'] },
+          { id: 18, division: 'compliance', divisionName: 'Operations', code: 'AGT-OPS-02', title: 'Legal & Consent Monitor', icon: 'fa-solid fa-scale-balanced', description: 'Verifies GDPR, CAN-SPAM, CCPA, and FTC disclosure compliance before deployment.', deliverables: ['Consent Checklist', 'Regulatory Compliance Log'] },
+          { id: 19, division: 'compliance', divisionName: 'Operations', code: 'AGT-OPS-03', title: 'Human-in-the-Loop Gatekeeper', icon: 'fa-solid fa-hand', description: 'Manages approval queues for campaigns exceeding pre-set spending or reach thresholds.', deliverables: ['Approval Queue Digest', 'Exception Log'] },
+          { id: 20, division: 'compliance', divisionName: 'Operations', code: 'AGT-OPS-04', title: 'Agent Orchestrator (MEA Master)', icon: 'fa-solid fa-brain', description: 'Coordinates tasks across all 19 sub-agents and maintains alignment with master growth KPIs.', deliverables: ['Master Execution Plan', 'Weekly Growth Audit'] }
+        ],
+
+        launchSteps: [
+          { phase: 'PHASE 1', title: 'ICP & Grounding', desc: 'Synthesize buyer psychology and CRM data to set target criteria.', agents: 'Positioning, ICP Synthesizer' },
+          { phase: 'PHASE 2', title: 'Asset Build', desc: 'Generate VSLs, landing pages, ad copy, and email sequences.', agents: 'VSL, Copywriter, Email' },
+          { phase: 'PHASE 3', title: 'Compliance Gate', desc: 'Filter through 5-gate safety check and brand tone verification.', agents: 'Brand Safety, Legal Auditor' },
+          { phase: 'PHASE 4', title: 'Scale & Iterate', desc: 'Deploy traffic, score ICE test matrices, and optimize automatically.', agents: 'ICE Scorer, Attribution' }
+        ],
+
+        verticals: [
+          { icon: 'fa-solid fa-cloud', title: 'B2B SaaS Growth', desc: 'Accelerates demo bookings, trial activations, and lowers CAC through programmatic search & GEO optimization.', impact: '+45% Trial-to-Paid Conversion Uplift' },
+          { icon: 'fa-solid fa-cart-shopping', title: 'E-Commerce & Print-on-Demand', desc: 'Scales high-volume creative ad testing, dynamic email flows, and catalog retention sequences.', impact: '3.8x Blended ROAS Scale Matrix' },
+          { icon: 'fa-solid fa-graduation-cap', title: 'Digital Products & Courses', desc: 'Automates evergreen webinar funnels, high-ticket VSLs, and long-tail launch sequences.', impact: '10x Creative Experiment Speed' },
+          { icon: 'fa-solid fa-building-user', title: 'High-Ticket Agencies', desc: 'Generates personalized outbound messaging, CRM lead scoring, and automated follow-ups.', impact: '60% Reduction in Sales Cycle' },
+          { icon: 'fa-solid fa-network-wired', title: 'Enterprise Lead Gen', desc: 'Ensures strict GDPR/FTC compliance while deploying omni-channel ABM campaigns.', impact: '100% Consent Audit Guarantee' }
+        ],
+
+        configJson: `{
+  "agent_id": "MEA-GROWTH-OPERATOR-v3",
+  "name": "Marketing Engineer Agent",
+  "project_reference": "https://bolt.new/~/sb1-64u3vcbm",
+  "divisions": 6,
+  "specialist_agents": 20,
+  "operating_parameters": {
+    "compliance_gates_active": true,
+    "human_in_the_loop_threshold": "$1,000 ad spend / day",
+    "ice_scoring_enabled": true,
+    "crm_grounding": "REQUIRED"
+  }
+}`,
+
+        activationPrompt: `Act as MEA (Marketing Engineer Agent & AI Growth Operator). 
+You are orchestrating 20 specialized growth agents across Strategy, Creative, Traffic, Nurture, Rapid Experimentation, and Compliance.
+
+Workspace Reference: https://bolt.new/~/sb1-64u3vcbm
+
+Task: Run a complete 0-to-1 growth funnel build for my product.
+1. Define 3 primary buyer personas grounded in customer pain points.
+2. Draft a 6-part VSL framework and 5 high-impact ad hook angles.
+3. Score a 3-test ICE experiment matrix for rapid traffic deployment.
+4. Run all deliverables through the 5-Gate Compliance Checklist.`,
+
+        get filteredAgents() {
+          if (this.selectedDivision === 'all') return this.agents;
+          return this.agents.filter(a => a.division === this.selectedDivision);
+        },
+
+        openAgentModal(agent) {
+          this.activeAgent = agent;
+          this.modalOpen = true;
+        },
+
+        copyText(text, stateVar) {
+          const el = document.createElement('textarea');
+          el.value = text;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+
+          this[stateVar] = true;
+          setTimeout(() => {
+            this[stateVar] = false;
+          }, 2000);
+        }
+      }));
+    });
+
+    /* Background Particle Visual Effects Canvas */
+    window.onload = function() {
+      const canvas = document.getElementById('particle-canvas');
+      const ctx = canvas.getContext('2d');
+
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const particles = [];
+      const particleCount = Math.min(width < 768 ? 25 : 50, 60);
+
+      for(let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          radius: Math.random() * 1.8 + 0.5,
+          alpha: Math.random() * 0.5 + 0.2
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        for(let i = 0; i < particles.length; i++) {
+          let p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if(p.x < 0) p.x = width;
+          if(p.x > width) p.x = 0;
+          if(p.y < 0) p.y = height;
+          if(p.y > height) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(99, 102, 241, ${p.alpha})`;
+          ctx.fill();
+
+          // Connect nearby particles with subtle line
+          for(let j = i + 1; j < particles.length; j++) {
+            let p2 = particles[j];
+            let dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+            if(dist < 120) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = `rgba(99, 102, 241, ${0.15 * (1 - dist / 120)})`;
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    };
+  </script>
+</body>
+</html>

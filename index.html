@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBZUEAI MEA - 14-Day Trial & Payment Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
+        .glass-card { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-gradient { background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); }
+        .btn-gradient:hover { background: linear-gradient(135deg, #1d4ed8 0%, #4338ca 100%); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <!-- Top Promo Banner -->
+    <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-blue-900 text-white text-xs md:text-sm py-2 px-4 text-center flex items-center justify-between border-b border-indigo-500/30">
+        <div class="flex-1 flex items-center justify-center gap-2">
+            <span class="bg-indigo-500/30 text-indigo-200 text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wide">Special Launch</span>
+            <span>Try <strong>OBZUEAI MEA</strong> Risk-Free for 14 Days! Zero Lock-in. Full OBZUEAI ArrowHead Shield™ Access.</span>
+        </div>
+        <button onclick="openCheckout('Growth SaaS', 499, true)" class="hidden md:inline-block bg-white text-indigo-950 font-bold text-xs px-3.5 py-1 rounded-full hover:bg-indigo-100 transition">
+            Claim 14-Day Free Trial
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header class="border-b border-gray-800 bg-gray-950/80 sticky top-0 z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-black text-white text-xl shadow-lg shadow-cyan-500/20">
+                    O
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight text-white">OBZUEAI</span>
+                    <span class="text-xs bg-indigo-950 text-indigo-400 border border-indigo-800/50 px-2 py-0.5 rounded-full font-mono ml-2">MEA v2.4</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCartDrawer()" class="relative p-2 text-gray-300 hover:text-white transition">
+                    <i class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span id="cart-badge" class="absolute -top-1 -right-1 bg-cyan-500 text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </button>
+                <button onclick="switchTab('account')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 transition">
+                    <i class="fa-solid fa-user-gear mr-1"></i> Account & Bank Payouts
+                </button>
+                <button onclick="switchTab('admin')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-red-950/50 border border-red-800/40 text-red-300 hover:bg-red-900/50 transition">
+                    <i class="fa-solid fa-shield-halved mr-1"></i> Tier-3 Admin
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-8">
+
+        <!-- Navigation Tabs -->
+        <div class="flex items-center border-b border-gray-800 overflow-x-auto gap-8 text-sm font-medium">
+            <button onclick="switchTab('pricing')" id="tab-btn-pricing" class="pb-3 text-cyan-400 border-b-2 border-cyan-400 font-bold">14-Day Trial & Pricing</button>
+            <button onclick="switchTab('gallery')" id="tab-btn-gallery" class="pb-3 text-gray-400 hover:text-gray-200">Asset Gallery & Visuals</button>
+            <button onclick="switchTab('account')" id="tab-btn-account" class="pb-3 text-gray-400 hover:text-gray-200">Account & Bank Payouts</button>
+            <button onclick="switchTab('admin')" id="tab-btn-admin" class="pb-3 text-gray-400 hover:text-gray-200">Tier-3 Admin Console</button>
+        </div>
+
+        <!-- Section 1: Pricing -->
+        <div id="sec-pricing" class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Deploy MEA with a <span class="gradient-text">14-Day Free Trial</span></h1>
+                <p class="text-gray-400 text-sm md:text-base">Experience 20 AI Growth Agents and OBZUEAI ArrowHead Shield™ Security. Cancel anytime during your 14-day trial with $0 charged.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+                <!-- Tier 1 -->
+                <div class="glass-card rounded-2xl p-6 relative flex flex-col justify-between hover:border-indigo-500/50 transition">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">MEA (Marketing Engineer Agent)</h3>
+                                <p class="text-xs text-gray-400">For Startups & Growth Operators</p>
+                            </div>
+                            <span class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs px-2.5 py-1 rounded-full font-bold">14-DAY TRIAL</span>
+                        </div>
+                        <div class="my-4">
+                            <span class="text-3xl font-extrabold text-white">$499</span>
+                            <span class="text-xs text-gray-400">/ month after trial</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-gray-300 my-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> All 20 Specialist AI Growth Agents</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> 10 Active Campaign Workflows</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> OBZUEAI ArrowHead Shield™ Standard</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> ICE Experiment Engine</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCheckout('Growth SaaS', 499, true)" class="w-full btn-gradient py-3 rounded-xl font-bold text-sm text-white shadow-lg shadow-indigo-500/20">
+                        Start 14-Day Free Trial
+                    </button>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="glass-card rounded-2xl p-6 relative flex flex-col justify-between border-2 border-cyan-500/80 bg-gradient-to-b from-cyan-950/20 to-gray-900/80">
+                    <div class="absolute -top-3 right-6 bg-cyan-500 text-black text-[10px] font-black px-3 py-0.5 rounded-full uppercase tracking-wider">Most Popular</div>
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Enterprise AI OS</h3>
+                                <p class="text-xs text-cyan-300">For Scale-ups & Mid-Market</p>
+                            </div>
+                            <span class="bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 text-xs px-2.5 py-1 rounded-full font-bold">14-DAY TRIAL</span>
+                        </div>
+                        <div class="my-4">
+                            <span class="text-3xl font-extrabold text-white">$25,000</span>
+                            <span class="text-xs text-gray-400">/ year after trial</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-gray-300 my-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Unlimited AI Growth Workflows</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Full CRM Direct Data Pipelines</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> ArrowHead Shield™ Advanced Protection</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Dedicated Growth Architect Support</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCheckout('Enterprise AI OS', 25000, true, 'year')" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black py-3 rounded-xl font-bold text-sm shadow-lg shadow-cyan-500/20 transition">
+                        Start 14-Day Enterprise Trial
+                    </button>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="glass-card rounded-2xl p-6 relative flex flex-col justify-between hover:border-purple-500/50 transition">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Per-Seat Plan with Custom Agent Nodes</h3>
+                                <p class="text-xs text-gray-400">For Agencies & Networks</p>
+                            </div>
+                            <span class="bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs px-2.5 py-1 rounded-full font-bold">FULL NODE</span>
+                        </div>
+                        <div class="my-4">
+                            <span class="text-3xl font-extrabold text-white">$2,500</span>
+                            <span class="text-xs text-gray-400">/ month per seat</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-gray-300 my-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> 10 Dedicated Client Node Instances</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Custom Branding & White-Label Portal</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Direct Bank Deposit Payout Setup</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Private Repository Infrastructure</li>
+                        </ul>
+                    </div>
+                    <button onclick="openCheckout('Per-Seat Plan with Custom Agent Nodes', 2500, false, 'month per seat')" class="w-full bg-purple-600 hover:bg-purple-500 py-3 rounded-xl font-bold text-sm text-white transition">
+                        Deploy Custom Agent Nodes
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Asset Gallery -->
+        <div id="sec-gallery" class="hidden space-y-6">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-2xl font-bold text-white">OBZUEAI Media & Creative Asset Suite</h2>
+                <p class="text-xs text-gray-400">Corrected high-resolution branding graphics and UI control panel assets packaged inside this repo.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <div class="glass-card p-4 rounded-2xl space-y-3">
+                    <img src="./public/assets/mea-hero-banner.jpg" alt="OBZUEAI MEA Dashboard" class="w-full h-auto rounded-xl border border-gray-800">
+                    <div>
+                        <h4 class="text-sm font-bold text-white">OBZUEAI MEA Executive Interface</h4>
+                        <p class="text-xs text-gray-400">Corrected spelling banner displaying 20 active AI agents and ROI analytics.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-2xl space-y-3">
+                    <img src="./public/assets/arrowhead-shield-ad.jpg" alt="OBZUEAI ArrowHead Shield Ad" class="w-full h-auto rounded-xl border border-gray-800">
+                    <div>
+                        <h4 class="text-sm font-bold text-white">OBZUEAI ArrowHead Shield™ Ad Banner</h4>
+                        <p class="text-xs text-gray-400">14-Day Free Trial promo graphic with crest emblem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Account & Bank Payouts -->
+        <div id="sec-account" class="hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 max-w-4xl mx-auto space-y-6">
+                <div class="border-b border-gray-800 pb-4 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Bank Payout & Payment Structure Settings</h2>
+                        <p class="text-xs text-gray-400">Configure where revenue and trial conversions are deposited into your financial institution.</p>
+                    </div>
+                    <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs px-3 py-1 rounded-full font-semibold">
+                        <i class="fa-solid fa-circle-check mr-1"></i> Bank Webhooks Active
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="space-y-1">
+                        <label class="text-gray-400">Receiving Financial Institution</label>
+                        <input type="text" value="JPMorgan Chase Bank, N.A." class="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-gray-400">Account Holder Name</label>
+                        <input type="text" value="OBZUEAI Enterprise LLC" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-gray-400">ACH Routing Number (ABA)</label>
+                        <input type="password" value="021000021" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-gray-400">Direct Deposit Account Number</label>
+                        <input type="password" value="987654321098" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white">
+                    </div>
+                </div>
+
+                <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 flex justify-between items-center text-xs">
+                    <div>
+                        <span class="text-gray-400">Payout Schedule:</span>
+                        <strong class="text-white ml-2">Daily Rolling ACH (T+1 Settlement)</strong>
+                    </div>
+                    <button onclick="alert('Bank account settings saved successfully.')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg transition">
+                        Update Payout Configuration
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Tier-3 Admin Console -->
+        <div id="sec-admin" class="hidden space-y-6">
+            <div class="glass-card rounded-2xl p-6 border-red-900/30">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-red-950 border border-red-800 flex items-center justify-center text-red-400 font-bold">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-lg font-bold text-white">Tier-3 Executive Administrative Command</h2>
+                            <p class="text-xs text-gray-400">OBZUEAI ArrowHead Shield™ Security & Diagnostics</p>
+                        </div>
+                    </div>
+                    <span class="bg-red-500/10 text-red-400 border border-red-500/20 text-xs px-3 py-1 rounded-full font-mono">MASTER ACCESS GRANTED</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800">
+                        <div class="text-xs text-gray-400">System Security Health</div>
+                        <div class="text-2xl font-bold text-emerald-400 mt-1">100% Optimal</div>
+                        <div class="text-[10px] text-gray-500 mt-1">ArrowHead Shield™ Active</div>
+                    </div>
+                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800">
+                        <div class="text-xs text-gray-400">Pending Auto-Fix Patch</div>
+                        <div class="text-2xl font-bold text-amber-400 mt-1">0 Vulnerabilities</div>
+                        <div class="text-[10px] text-gray-500 mt-1">Dependencies verified</div>
+                    </div>
+                    <div class="bg-gray-950 p-4 rounded-xl border border-gray-800">
+                        <div class="text-xs text-gray-400">Active Trial Instances</div>
+                        <div class="text-2xl font-bold text-cyan-400 mt-1">142 Users</div>
+                        <div class="text-[10px] text-gray-500 mt-1">$70.8k MRR Pipeline</div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-950 rounded-xl p-4 border border-gray-800 space-y-2">
+                    <div class="flex justify-between items-center text-xs text-gray-400 mb-2">
+                        <span>Live Security & Maintenance Log</span>
+                        <button onclick="runAutoFix()" class="text-xs bg-red-900/40 hover:bg-red-900/60 text-red-200 px-3 py-1 rounded border border-red-800">Run Diagnostic & Repair</button>
+                    </div>
+                    <div id="admin-log" class="font-mono text-[11px] text-gray-400 h-32 overflow-y-auto space-y-1 bg-black/50 p-3 rounded-lg">
+                        <div>[SYSTEM OK] OBZUEAI ArrowHead Shield™ Active.</div>
+                        <div>[PAYMENT ENGINE] Direct ACH Webhooks listening on /api/v2/payouts.</div>
+                        <div>[BRAND AUDIT] Verified spelling 'OBZUEAI' across all asset headers.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="glass-card rounded-2xl max-w-lg w-full p-6 space-y-6 relative border-gray-700">
+            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div>
+                <h3 id="modal-plan-title" class="text-xl font-bold text-white">Start 14-Day Free Trial</h3>
+                <p id="modal-plan-desc" class="text-xs text-cyan-400">14 Days Free, then $499/month. Cancel anytime.</p>
+            </div>
+
+            <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 text-xs space-y-2">
+                <div class="flex justify-between text-gray-300">
+                    <span>Subscription Plan</span>
+                    <strong id="summary-plan-name" class="text-white">Growth SaaS</strong>
+                </div>
+                <div class="flex justify-between text-gray-300">
+                    <span>14-Day Free Trial Discount</span>
+                    <span class="text-emerald-400 font-bold">-$499.00 (100% OFF TODAY)</span>
+                </div>
+                <div class="border-t border-gray-800 pt-2 flex justify-between text-sm font-bold text-white">
+                    <span>Due Today</span>
+                    <span id="summary-total-due" class="text-cyan-400">$0.00</span>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <label class="text-gray-400 font-medium">Select Payment Method</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <button type="button" class="p-3 bg-gray-900 border border-cyan-500 rounded-xl text-white font-bold flex flex-col items-center gap-1">
+                        <i class="fa-solid fa-credit-card"></i> Card / Stripe
+                    </button>
+                    <button type="button" class="p-3 bg-gray-900 border border-gray-800 rounded-xl text-gray-400 hover:text-white flex flex-col items-center gap-1">
+                        <i class="fa-brands fa-apple text-base"></i> Apple Pay
+                    </button>
+                    <button type="button" class="p-3 bg-gray-900 border border-gray-800 rounded-xl text-gray-400 hover:text-white flex flex-col items-center gap-1">
+                        <i class="fa-solid fa-building-columns"></i> Bank ACH
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <input type="text" placeholder="Cardholder Name" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white">
+                <input type="text" placeholder="Card Number (4242 •••• •••• 4242)" class="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white">
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" placeholder="MM/YY" class="bg-gray-900 border border-gray-800 rounded-lg p-3 text-white">
+                    <input type="text" placeholder="CVC" class="bg-gray-900 border border-gray-800 rounded-lg p-3 text-white">
+                </div>
+            </div>
+
+            <button onclick="processSubscription()" class="w-full btn-gradient py-3.5 rounded-xl font-bold text-sm text-white shadow-lg shadow-indigo-500/20">
+                Activate 14-Day Free Trial Instantly
+            </button>
+            <p class="text-[10px] text-center text-gray-500">Secured by OBZUEAI ArrowHead Shield™ 256-Bit Encryption.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-900 bg-gray-950 py-6 text-center text-xs text-gray-500">
+        <p>© 2026 OBZUEAI Enterprise. All rights reserved. OBZUEAI ArrowHead Shield™ Protected.</p>
+    </footer>
+
+    <script>
+        let currentCartCount = 0;
+
+        function switchTab(tabId) {
+            ['pricing', 'gallery', 'account', 'admin'].forEach(id => {
+                document.getElementById('sec-' + id).classList.add('hidden');
+                document.getElementById('tab-btn-' + id).className = 'pb-3 text-gray-400 hover:text-gray-200';
+            });
+            document.getElementById('sec-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-btn-' + tabId).className = 'pb-3 text-cyan-400 border-b-2 border-cyan-400 font-bold';
+        }
+
+        function openCheckout(planName, price, isTrial, period) {
+            period = period || 'month';
+            document.getElementById('modal-plan-title').innerText = isTrial ? 'Start 14-Day Free Trial' : 'Deploy ' + planName;
+            document.getElementById('modal-plan-desc').innerText = isTrial ? '14 Days Free, then $' + price.toLocaleString('en-US') + '/' + period + '. Cancel anytime.' : '$' + price.toLocaleString('en-US') + '/' + period + ' recurring subscription.';
+            document.getElementById('summary-plan-name').innerText = planName;
+            document.getElementById('summary-total-due').innerText = isTrial ? '$0.00' : '$' + price.toLocaleString('en-US') + '.00';
+            document.getElementById('checkout-modal').classList.remove('hidden');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+        }
+
+        function processSubscription() {
+            alert('🎉 Success! Your 14-Day Free Trial has been activated under OBZUEAI ArrowHead Shield™. Check your email for instant dashboard access.');
+            closeCheckout();
+            currentCartCount++;
+            document.getElementById('cart-badge').innerText = currentCartCount;
+        }
+
+        function toggleCartDrawer() {
+            alert('Shopping Cart: ' + currentCartCount + ' Active Plan Subscriptions selected.');
+        }
+
+        function runAutoFix() {
+            const log = document.getElementById('admin-log');
+            const newEntry = document.createElement('div');
+            newEntry.innerText = '[' + new Date().toLocaleTimeString() + '] [AUTO-FIX SUCCESS] Executed integrity scan & security patches across all active nodes.';
+            newEntry.className = 'text-emerald-400 font-bold';
+            log.prepend(newEntry);
+        }
+    </script>
+</body>
+</html>

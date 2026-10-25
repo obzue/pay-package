@@ -1,0 +1,9 @@
+{
+  "project_reference": {
+    "brand": "OBZUEAI",
+    "domain": "https://obzueai.com",
+    "repository": "https://github.com/obzue/pay-package",
+    "local_manifest": "./package.json",
+    "secretary_skill": "./TECHNICAL_SECRETARY_AGENT_SKILL.md"
+  }
+}
