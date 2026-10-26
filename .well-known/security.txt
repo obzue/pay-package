@@ -1,0 +1,6 @@
+Contact: https://obzueai.com/security
+Contact: mailto:security@obzueai.com
+Expires: 2027-10-25T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://obzueai.com/.well-known/security.txt
+Policy: https://github.com/obzue/pay-package/blob/main/SECURITY.md

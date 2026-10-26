@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OBZUEAI MEA - 14-Day Trial & Payment Engine</title>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <!-- SECURITY: Tailwind Play CDN is unversioned/dynamic, so SRI cannot be pinned. Replace with a locally built CSS file (or a version-locked CDN URL + integrity hash) before production. -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <!-- Runtime config (gitignored). Copy config.example.js to config.js. If missing, the page falls back gracefully. -->
+    <script src="config.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
@@ -23,7 +27,7 @@
             <span class="bg-indigo-500/30 text-indigo-200 text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wide">Special Launch</span>
             <span>Try <strong>OBZUEAI MEA</strong> Risk-Free for 14 Days! Zero Lock-in. Full OBZUEAI ArrowHead Shield™ Access.</span>
         </div>
-        <button onclick="openCheckout('Growth SaaS', 499, true)" class="hidden md:inline-block bg-white text-indigo-950 font-bold text-xs px-3.5 py-1 rounded-full hover:bg-indigo-100 transition">
+        <button data-action="openCheckout" data-args='["Growth SaaS", 499, true]' class="hidden md:inline-block bg-white text-indigo-950 font-bold text-xs px-3.5 py-1 rounded-full hover:bg-indigo-100 transition">
             Claim 14-Day Free Trial
         </button>
     </div>
@@ -42,14 +46,14 @@
             </div>
 
             <div class="flex items-center gap-4">
-                <button onclick="toggleCartDrawer()" class="relative p-2 text-gray-300 hover:text-white transition">
+                <button data-action="toggleCartDrawer" data-args='[]' class="relative p-2 text-gray-300 hover:text-white transition">
                     <i class="fa-solid fa-cart-shopping text-lg"></i>
                     <span id="cart-badge" class="absolute -top-1 -right-1 bg-cyan-500 text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
                 </button>
-                <button onclick="switchTab('account')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 transition">
+                <button data-action="switchTab" data-args='["account"]' class="text-xs font-semibold px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 transition">
                     <i class="fa-solid fa-user-gear mr-1"></i> Account & Bank Payouts
                 </button>
-                <button onclick="switchTab('admin')" class="text-xs font-semibold px-3 py-2 rounded-lg bg-red-950/50 border border-red-800/40 text-red-300 hover:bg-red-900/50 transition">
+                <button data-action="switchTab" data-args='["admin"]' class="text-xs font-semibold px-3 py-2 rounded-lg bg-red-950/50 border border-red-800/40 text-red-300 hover:bg-red-900/50 transition">
                     <i class="fa-solid fa-shield-halved mr-1"></i> Tier-3 Admin
                 </button>
             </div>
@@ -61,10 +65,10 @@
 
         <!-- Navigation Tabs -->
         <div class="flex items-center border-b border-gray-800 overflow-x-auto gap-8 text-sm font-medium">
-            <button onclick="switchTab('pricing')" id="tab-btn-pricing" class="pb-3 text-cyan-400 border-b-2 border-cyan-400 font-bold">14-Day Trial & Pricing</button>
-            <button onclick="switchTab('gallery')" id="tab-btn-gallery" class="pb-3 text-gray-400 hover:text-gray-200">Asset Gallery & Visuals</button>
-            <button onclick="switchTab('account')" id="tab-btn-account" class="pb-3 text-gray-400 hover:text-gray-200">Account & Bank Payouts</button>
-            <button onclick="switchTab('admin')" id="tab-btn-admin" class="pb-3 text-gray-400 hover:text-gray-200">Tier-3 Admin Console</button>
+            <button data-action="switchTab" data-args='["pricing"]' id="tab-btn-pricing" class="pb-3 text-cyan-400 border-b-2 border-cyan-400 font-bold">14-Day Trial & Pricing</button>
+            <button data-action="switchTab" data-args='["gallery"]' id="tab-btn-gallery" class="pb-3 text-gray-400 hover:text-gray-200">Asset Gallery & Visuals</button>
+            <button data-action="switchTab" data-args='["account"]' id="tab-btn-account" class="pb-3 text-gray-400 hover:text-gray-200">Account & Bank Payouts</button>
+            <button data-action="switchTab" data-args='["admin"]' id="tab-btn-admin" class="pb-3 text-gray-400 hover:text-gray-200">Tier-3 Admin Console</button>
         </div>
 
         <!-- Section 1: Pricing -->
@@ -96,7 +100,7 @@
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> ICE Experiment Engine</li>
                         </ul>
                     </div>
-                    <button onclick="openCheckout('Growth SaaS', 499, true)" class="w-full btn-gradient py-3 rounded-xl font-bold text-sm text-white shadow-lg shadow-indigo-500/20">
+                    <button data-action="openCheckout" data-args='["Growth SaaS", 499, true]' class="w-full btn-gradient py-3 rounded-xl font-bold text-sm text-white shadow-lg shadow-indigo-500/20">
                         Start 14-Day Free Trial
                     </button>
                 </div>
@@ -123,7 +127,7 @@
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Dedicated Growth Architect Support</li>
                         </ul>
                     </div>
-                    <button onclick="openCheckout('Enterprise AI OS', 25000, true, 'year')" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black py-3 rounded-xl font-bold text-sm shadow-lg shadow-cyan-500/20 transition">
+                    <button data-action="openCheckout" data-args='["Enterprise AI OS", 25000, true, "year"]' class="w-full bg-cyan-500 hover:bg-cyan-400 text-black py-3 rounded-xl font-bold text-sm shadow-lg shadow-cyan-500/20 transition">
                         Start 14-Day Enterprise Trial
                     </button>
                 </div>
@@ -149,7 +153,7 @@
                             <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Private Repository Infrastructure</li>
                         </ul>
                     </div>
-                    <button onclick="openCheckout('Per-Seat Plan with Custom Agent Nodes', 2500, false, 'month per seat')" class="w-full bg-purple-600 hover:bg-purple-500 py-3 rounded-xl font-bold text-sm text-white transition">
+                    <button data-action="openCheckout" data-args='["Per-Seat Plan with Custom Agent Nodes", 2500, false, "month per seat"]' class="w-full bg-purple-600 hover:bg-purple-500 py-3 rounded-xl font-bold text-sm text-white transition">
                         Deploy Custom Agent Nodes
                     </button>
                 </div>
@@ -219,7 +223,7 @@
                         <span class="text-gray-400">Payout Schedule:</span>
                         <strong class="text-white ml-2">Daily Rolling ACH (T+1 Settlement)</strong>
                     </div>
-                    <button onclick="alert('Bank account settings saved successfully.')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg transition">
+                    <button data-action="alert" data-args='["Bank account settings saved successfully."]' class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg transition">
                         Update Payout Configuration
                     </button>
                 </div>
@@ -263,7 +267,7 @@
                 <div class="bg-gray-950 rounded-xl p-4 border border-gray-800 space-y-2">
                     <div class="flex justify-between items-center text-xs text-gray-400 mb-2">
                         <span>Live Security & Maintenance Log</span>
-                        <button onclick="runAutoFix()" class="text-xs bg-red-900/40 hover:bg-red-900/60 text-red-200 px-3 py-1 rounded border border-red-800">Run Diagnostic & Repair</button>
+                        <button data-action="runAutoFix" data-args='[]' class="text-xs bg-red-900/40 hover:bg-red-900/60 text-red-200 px-3 py-1 rounded border border-red-800">Run Diagnostic & Repair</button>
                     </div>
                     <div id="admin-log" class="font-mono text-[11px] text-gray-400 h-32 overflow-y-auto space-y-1 bg-black/50 p-3 rounded-lg">
                         <div>[SYSTEM OK] OBZUEAI ArrowHead Shield™ Active.</div>
@@ -279,7 +283,7 @@
     <!-- Modal -->
     <div id="checkout-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
         <div class="glass-card rounded-2xl max-w-lg w-full p-6 space-y-6 relative border-gray-700">
-            <button onclick="closeCheckout()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <button data-action="closeCheckout" data-args='[]' class="absolute top-4 right-4 text-gray-400 hover:text-white">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
 
@@ -327,7 +331,7 @@
                 </div>
             </div>
 
-            <button onclick="processSubscription()" class="w-full btn-gradient py-3.5 rounded-xl font-bold text-sm text-white shadow-lg shadow-indigo-500/20">
+            <button data-action="processSubscription" data-args='[]' class="w-full btn-gradient py-3.5 rounded-xl font-bold text-sm text-white shadow-lg shadow-indigo-500/20">
                 Activate 14-Day Free Trial Instantly
             </button>
             <p class="text-[10px] text-center text-gray-500">Secured by OBZUEAI ArrowHead Shield™ 256-Bit Encryption.</p>
@@ -381,6 +385,20 @@
             newEntry.innerText = '[' + new Date().toLocaleTimeString() + '] [AUTO-FIX SUCCESS] Executed integrity scan & security patches across all active nodes.';
             newEntry.className = 'text-emerald-400 font-bold';
             log.prepend(newEntry);
+        }
+
+        // Event delegation replaces inline onclick handlers (CSP-friendly).
+        const ACTIONS = { switchTab, openCheckout, closeCheckout, processSubscription, toggleCartDrawer, runAutoFix, alert: (msg) => window.alert(msg) };
+        document.addEventListener('click', (e) => {
+            const el = e.target.closest('[data-action]');
+            if (!el || !Object.prototype.hasOwnProperty.call(ACTIONS, el.dataset.action)) return;
+            const args = el.dataset.args ? JSON.parse(el.dataset.args) : [];
+            ACTIONS[el.dataset.action](...args);
+        });
+
+        // Checkout config is loaded from gitignored config.js (see config.example.js).
+        if (!window.PAY_CONFIG) {
+            console.warn('PAY_CONFIG not found: copy config.example.js to config.js and set your Stripe publishable key / checkout URLs. Checkout links are disabled until configured.');
         }
     </script>
 </body>

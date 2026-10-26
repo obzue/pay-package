@@ -4,3 +4,16 @@ node_modules/
 dist/
 .DS_Store
 .github/workflows/deploy.yml
+
+# --- Security hardening ---
+# Local runtime config (copy config.example.js -> config.js)
+config.js
+.env
+*.pem
+*.key
+# Stripe secrets must never be committed (sk_live_*, sk_test_*, rk_live_*, whsec_*)
+*sk_live_*
+*sk_test_*
+*rk_live_*
+*whsec_*
+stripe-secrets*

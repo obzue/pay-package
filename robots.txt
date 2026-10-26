@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /config/
+Disallow: /scripts/
+
+Sitemap: https://obzueai.com/sitemap.xml
