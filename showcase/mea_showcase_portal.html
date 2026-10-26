@@ -7,47 +7,12 @@
   <title>MEA - Marketing Engineer Agent & AI Growth Operator</title>
   
   <!-- Tailwind CSS -->
-  <!-- SECURITY: Tailwind Play CDN is dynamic; SRI cannot be pinned. Build CSS locally before production. -->
-<script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#eef2ff',
-              100: '#e0e7ff',
-              400: '#818cf8',
-              500: '#6366f1',
-              600: '#4f46e5',
-              900: '#1e1b4b',
-              accent: '#06b6d4',
-              neon: '#10b981',
-              pink: '#ec4899'
-            },
-            dark: {
-              bg: '#090d16',
-              card: '#111827',
-              border: 'rgba(255, 255, 255, 0.08)'
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['Fira Code', 'monospace']
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="../vendor/tailwind/tailwind.min.css" integrity="sha384-fhQ5qmKIY09KCnkt2615N1zje6lE2DNzlw6FI3mFnkWvkK3EEEbll4ZtQ93vjTbN" crossorigin="anonymous">
   
   <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- SECURITY: Alpine is loaded from a floating 3.x.x range; pin an exact version and add an integrity hash (SRI) once the version is locked. -->
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link rel="stylesheet" href="../vendor/fonts/fonts.css" integrity="sha384-G2cYSlPkpLU8svGEgBLE9tnqGhl7CTNok6KtCzGYFsyynGdHb5UhyMcoWTlPwfOJ" crossorigin="anonymous">
+  <script src="../vendor/fontawesome/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="../vendor/alpine/alpine-3.14.9.min.js" integrity="sha384-9Ax3MmS9AClxJyd5/zafcXXjxmwFhZCdsT6HJoJjarvCaAkJlk5QDzjLJm+Wdx5F" crossorigin="anonymous" defer></script>
 
   <style>
     body {

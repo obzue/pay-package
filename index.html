@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OBZUEAI MEA - 14-Day Trial & Payment Engine</title>
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <!-- SECURITY: Tailwind Play CDN is unversioned/dynamic, so SRI cannot be pinned. Replace with a locally built CSS file (or a version-locked CDN URL + integrity hash) before production. -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="vendor/tailwind/tailwind.min.css" integrity="sha384-fhQ5qmKIY09KCnkt2615N1zje6lE2DNzlw6FI3mFnkWvkK3EEEbll4ZtQ93vjTbN" crossorigin="anonymous">
+    <link rel="stylesheet" href="vendor/fonts/fonts.css" integrity="sha384-G2cYSlPkpLU8svGEgBLE9tnqGhl7CTNok6KtCzGYFsyynGdHb5UhyMcoWTlPwfOJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="vendor/fontawesome/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- Runtime config (gitignored). Copy config.example.js to config.js. If missing, the page falls back gracefully. -->
     <script src="config.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
+                body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
         .glass-card { background: rgba(17, 24, 39, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
         .gradient-text { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .btn-gradient { background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); }
